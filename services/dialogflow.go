@@ -1,11 +1,12 @@
 package services
 
 import (
-	"caco/bot/lib"
 	"caco/settings"
 	"context"
 	"fmt"
 	"log"
+
+	"github.com/shomali11/slacker"
 
 	dialogflow "cloud.google.com/go/dialogflow/apiv2"
 	dialogflowpb "google.golang.org/genproto/googleapis/cloud/dialogflow/v2"
@@ -14,7 +15,7 @@ import (
 // DialogFlowAction ...
 type DialogFlowAction struct {
 	Name    string
-	Command func(*dialogflowpb.QueryResult, lib.Request, lib.ResponseWriter)
+	Command func(*dialogflowpb.QueryResult, slacker.Request, slacker.ResponseWriter)
 }
 
 // DetectIntent ...
