@@ -18,7 +18,7 @@ func InitBot() {
 
 	// make the actions available
 	println("starting bot service")
-	bot := slacker.NewClient(settings.Config.SlackToken, slacker.WithDebug(settings.Config.Debug))
+	bot := slacker.NewClient(settings.Config.SlackBotToken, settings.Config.SlackAppToken, slacker.WithDebug(settings.Config.Debug))
 	bot.DefaultCommand(messageHandler)
 
 	bot.Err(func(err string) {
@@ -34,8 +34,9 @@ func InitBot() {
 	}
 }
 
-func messageHandler(request slacker.Request, response slacker.ResponseWriter) {
-	result, err := services.DetectIntent(request.Event().User, request.Event().Text)
+func messageHandler(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
+	event := botCtx.Event()
+	result, err := services.DetectIntent(event.User, event.Text)
 	if err != nil {
 		response.Reply(err.Error(), slacker.WithThreadReply(true))
 	}
