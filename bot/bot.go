@@ -1,8 +1,6 @@
 package bot
 
 import (
-	"caco/bot/actions"
-	"caco/services"
 	"caco/settings"
 	"context"
 	"log"
@@ -19,6 +17,7 @@ func InitBot() {
 	// make the actions available
 	println("starting bot service")
 	bot := slacker.NewClient(settings.Config.SlackBotToken, settings.Config.SlackAppToken, slacker.WithDebug(settings.Config.Debug))
+
 	bot.DefaultCommand(messageHandler)
 
 	bot.Err(func(err string) {
@@ -35,19 +34,19 @@ func InitBot() {
 }
 
 func messageHandler(botCtx slacker.BotContext, request slacker.Request, response slacker.ResponseWriter) {
-	event := botCtx.Event()
-	result, err := services.DetectIntent(event.User, event.Text)
-	if err != nil {
-		response.Reply(err.Error(), slacker.WithThreadReply(true))
-	}
+	// event := botCtx.Event()
+	// result, err := services.DetectIntent(event.User, event.Text)
+	// if err != nil {
+	// 	response.Reply(err.Error(), slacker.WithThreadReply(true))
+	// }
 
-	action := actions.GetAction(result.GetAction())
-	if action != nil {
-		action.Command(result, request, response)
-		return
-	}
+	// action := actions.GetAction(result.GetAction())
+	// if action != nil {
+	// 	action.Command(result, request, response)
+	// 	return
+	// }
 
-	log.Println("não encontrou action")
+	// log.Println("não encontrou action")
 
-	response.Reply("Ohoh... um tanto quanto perdido aqui!", slacker.WithThreadReply(true))
+	response.Reply("Oh oh... um tanto quanto perdido aqui!", slacker.WithThreadReply(true))
 }
