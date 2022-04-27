@@ -10,7 +10,7 @@ import (
 	"github.com/xanzy/go-gitlab"
 )
 
-const PER_PAGE = 999999999
+const GITLAB_PER_PAGE = 999999999
 
 type GitlabService struct {
 	client *gitlab.Client
@@ -87,7 +87,7 @@ func (s *GitlabService) GetProjectOpenedMergeRequests(pid int) ([]*gitlab.MergeR
 			State: gitlab.String("opened"),
 			Scope: gitlab.String("all"),
 			ListOptions: gitlab.ListOptions{
-				PerPage: PER_PAGE,
+				PerPage: GITLAB_PER_PAGE,
 			},
 		},
 		gitlab.WithContext(context.Background()),
@@ -131,7 +131,7 @@ func (s *GitlabService) callListGroups(page int) ([]*gitlab.Group, *gitlab.Respo
 		&gitlab.ListGroupsOptions{
 			AllAvailable: gitlab.Bool(true),
 			ListOptions: gitlab.ListOptions{
-				PerPage: PER_PAGE,
+				PerPage: GITLAB_PER_PAGE,
 				Page:    page,
 			},
 		},
@@ -145,7 +145,7 @@ func (s *GitlabService) callListGroupProjects(gid int, page int) ([]*gitlab.Proj
 			Archived: gitlab.Bool(false),
 			Simple:   gitlab.Bool(true),
 			ListOptions: gitlab.ListOptions{
-				PerPage: PER_PAGE,
+				PerPage: GITLAB_PER_PAGE,
 				Page:    page,
 			},
 		},

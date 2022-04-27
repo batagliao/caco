@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"caco/bot/actions"
 	"caco/settings"
 	"context"
 	"log"
@@ -19,6 +20,8 @@ func InitBot() {
 	bot := slacker.NewClient(settings.Config.SlackBotToken, settings.Config.SlackAppToken, slacker.WithDebug(settings.Config.Debug))
 
 	bot.DefaultCommand(messageHandler)
+
+	bot.Command("prs <project>", actions.TeamPRs_CommandDefinition)
 
 	bot.Err(func(err string) {
 		log.Println(err)
